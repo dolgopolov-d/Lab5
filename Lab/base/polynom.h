@@ -115,9 +115,16 @@ public:
 	*/
 	int Calculate(int _x, int _y, int _z)
 	{
-		double tmp = 0;
-		for (int i = 1; i <= getListCount(); i++)
-			tmp = tmp+getListCoeff(i)*pow(_x, getListExp(i) / 100)*pow(_y, getListExp(i) / 10 % 10)*pow(_z, getListExp(i) % 10 % 10);
+		int tmp = 0;
+		tmp = tmp + getListCoeff(1)*pow(_x, getListExp(1) / 100)*pow(_y, getListExp(1) / 10 % 10)*pow(_z, getListExp(1) % 10 % 10);
+		for (int i = 2; i <= getListCount(); i++)
+		{
+			if (sign[i - 2] == '+')
+				tmp = tmp + getListCoeff(i)*pow(_x, getListExp(i) / 100)*pow(_y, getListExp(i) / 10 % 10)*pow(_z, getListExp(i) % 10 % 10);
+			else
+				if (sign[i - 2] == '-')
+					tmp = tmp - getListCoeff(i)*pow(_x, getListExp(i) / 100)*pow(_y, getListExp(i) / 10 % 10)*pow(_z, getListExp(i) % 10 % 10);
+		}
 		return tmp;
 	}
 };

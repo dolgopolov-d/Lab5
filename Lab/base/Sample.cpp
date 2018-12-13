@@ -20,7 +20,7 @@ void main()
 	cin >> y;
 	cout << "¬ведите значение z: " << endl;
 	cin >> z;
-	cout << "–езультат: " <<  a.Calculate(x, y, z) << endl;
+	cout << "–езультат: " << a.Calculate(x, y, z) << endl;
 	/*
 	cout << "¬ведите первый полином: " << endl;
 	cin >> in1;
