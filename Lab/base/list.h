@@ -67,11 +67,26 @@ public:
 		}
 		count--;
 	}
+	void clear()
+	{
+		Node *current = pFirst;
+		Node *del = pFirst;
+		while (del != nullptr)
+		{
+			current = current->pNext;
+			delete del;
+			del = current;
+		}
+		pFirst = nullptr;
+		count = 0;
+	}
 	T getCoeff(int a)
 	{
 		Node *current;
 		for (current = pFirst; a > 1; a--)
 			current = current->pNext;
+		if (current == nullptr)
+			throw;
 		return current->c;
 	}
 	T getExp(int a)

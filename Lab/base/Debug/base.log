@@ -1,6 +1,4 @@
 ﻿  Sample.cpp
-c:\pr\mp2-lab5\lab5\base\polynom.h(43): warning C4018: <: несоответствие типов со знаком и без знака
-  Создание кода...
-  Пропуск... (изменения не обнаружены)
-  SampleForTesting.cpp
-  base.vcxproj -> C:\Pr\mp2-lab5\Lab5\Debug\base.exe
+c:\pr\mp2-lab5\lab5\lab\base\polynom.h(44): warning C4018: <: несоответствие типов со знаком и без знака
+c:\pr\mp2-lab5\lab5\lab\base\polynom.h(121): warning C4244: return: преобразование "double" в "int", возможна потеря данных
+  base.vcxproj -> C:\Pr\mp2-lab5\Lab5\Lab\Debug\base.exe
