@@ -10,9 +10,9 @@ void main()
 	TPolynom a, b1, b2;
 	string in, in1, in2;
 	int f;
-	g:cout << "1. Вычислить полином\n2. Сложить полином\n";
+	g:cout << "1. Вычислить полином\n2. Сложить полином\n3. Вычесть полином\n";
 	cin >> f;
-	if (f > 2 || f < 1)
+	if (f > 3 || f < 1)
 	{
 		cout << "Неверный выбор" << endl;
 		goto g;
@@ -21,10 +21,9 @@ void main()
 	{
 	case 1:
 	{
-		cout << "Введите полином вида QxAyBzC" << endl << "где Q-коэффициент, A-степень при х, B-степень при у, C-степнь при z " << endl << "(если какого-то множителя нет, то его степень равна 0; A, B, C < 10): " << endl;
+		cout << "Введите полином из мономов вида QxAyBzC" << endl << "где Q-коэффициент, A-степень при х, B-степень при у, C-степeнь при z " << endl << "(если какого-то множителя нет, то его степень равна 0; A, B, C < 10): " << endl;
 		cin >> in;
 		a.Create(in);
-		a.Correct();
 		cout << "Ваш полином: " << endl;
 		a.getPolynom();
 		cout << "Введите значение х: " << endl;
@@ -49,7 +48,22 @@ void main()
 		b2.getPolynom();
 		TPolynom res;
 		res.doPlus(b1, b2);
-		res.Correct();
+		res.getPolynom();
+		break;
+	}
+	case 3:
+	{
+		cout << "Введите первый полином: " << endl;
+		cin >> in1;
+		b1.Create(in1);
+		cout << "Введите второй полином: " << endl;
+		cin >> in2;
+		b2.Create(in2);
+		cout << "Вычитаются полиномы: " << endl;
+		b1.getPolynom();
+		b2.getPolynom();
+		TPolynom res;
+		res.doMinus(b1, b2);
 		res.getPolynom();
 		break;
 	}

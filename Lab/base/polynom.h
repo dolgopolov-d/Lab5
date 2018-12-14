@@ -14,12 +14,6 @@ private:
 	string exp_z;
 public:
 	TPolynom(){}
-	TPolynom operator=(TPolynom &p)
-	{
-		this->l = p.l;
-		this->sign = p.sign;
-		return *this;
-	}
 	void Create(string a)
 	{
 		int c;
@@ -58,6 +52,8 @@ public:
 			i++;
 		}
 		c = stoi(coef);
+		if (stoi(exp_x) >= 10 || stoi(exp_y) >= 10 || stoi(exp_z) >= 10)
+			throw;
 		exp = stoi(exp_x) * 100 + stoi(exp_y) * 10 + stoi(exp_z);
 		l.add(c, exp);
 		string tmp = a.erase(0, i + 1);
@@ -114,6 +110,7 @@ public:
 					l.add((-1)*l1.getCoeff(i), l1.getExp(i));
 					sign[i-2] = '+';
 				}
+				else
 				if (sign[i - 2] == '+')
 					l.add(l1.getCoeff(i), l1.getExp(i));
 			}
@@ -124,8 +121,9 @@ public:
 				if (sign[i + p1.getSign().size() - 2] == '-')
 				{
 					l.add((-1)*l2.getCoeff(i), l2.getExp(i));
-					sign[i - 2] = '+';
+					sign[i + p1.getSign().size() - 2] = '+';
 				}
+				else
 				if (sign[i + p1.getSign().size() - 2] == '+')
 					l.add(l2.getCoeff(i), l2.getExp(i));
 			}
@@ -138,6 +136,8 @@ public:
 					l.del(j);
 					l.del(i);
 				}
+		if (sign.size() != l.getCount() - 1)
+			sign.pop_back();
 		if (flag == 0)
 		{
 			sign.clear();
@@ -146,54 +146,61 @@ public:
 		}
 		return;
 	}
-	void Correct()
+	void doMinus(TPolynom &p1, TPolynom &p2)
 	{
 		int flag = 0;
-		if(l.getCoeff(1) == 0)
-			l.del(1);
-		for (int i = 2; i < l.getCount(); i++)
-			if (l.getCoeff(i) == 0)
+		TList<int> l1(p1.getList());
+		TList<int> l2(p2.getList());
+		sign.clear();
+		sign = p1.getSign() + p2.getSign();
+		l.add(l1.getCoeff(1), l1.getExp(1));
+		if (l1.getCount() > 1)
+			for (int i = 2; i <= l1.getCount(); i++)
 			{
-				l.del(i);
-				sign.erase(i - 2);
+				if (sign[i - 2] == '-')
+				{
+					l.add((-1)*l1.getCoeff(i), l1.getExp(i));
+					sign[i - 2] = '+';
+				}
+				else
+					if (sign[i - 2] == '+')
+						l.add(l1.getCoeff(i), l1.getExp(i));
 			}
-		for (int i = 2; i <= l.getCount(); i++)
-			if (sign[i - 2] == '-')
+		l.add((-1)*l2.getCoeff(1), l2.getExp(1));
+		if (l2.getCount() > 1)
+			for (int i = 2; i <= l2.getCount(); i++)
 			{
-				l.add((-1)*l.getCoeff(i), l.getExp(i));
-				l.del(i);
-				sign[i - 2] = '+';
+				if (sign[i + p1.getSign().size() - 2] == '-')
+				{
+					l.add(l2.getCoeff(i), l2.getExp(i));
+					sign[i + p1.getSign().size() - 2] = '+';
+				}
+				else
+					if (sign[i + p1.getSign().size() - 2] == '+')
+						l.add((-1)*l2.getCoeff(i), l2.getExp(i));
 			}
 		for (int i = 1; i < l.getCount(); i++)
 			for (int j = i + 1; j <= l.getCount(); j++)
 				if (l.getExp(i) == l.getExp(j))
 				{
-					if (sign[j - 2] == '-')
-						l.add(l.getCoeff(i) - l.getCoeff(j), l.getExp(i));
-					if (sign[j - 2] == '+')
-						l.add(l.getCoeff(i) + l.getCoeff(j), l.getExp(i));
+					flag = 1;
+					l.add(l.getCoeff(i) + l.getCoeff(j), l.getExp(i));
 					l.del(j);
 					l.del(i);
-					flag = 1;
 				}
-				else
-					continue;
-		if (l.getCoeff(1) == 0)
-			l.del(1);
-		for (int i = 2; i < l.getCount(); i++)
-			if (l.getCoeff(i) == 0)
-			{
-				l.del(i);
-				sign.erase(i - 2);
-			}
-		if (flag == 0)
-			return;
-		if(!sign.empty())
+		if (sign.size() != l.getCount() - 1)
 			sign.pop_back();
+		if (flag == 0)
+		{
+			sign.clear();
+			for (int i = 1; i < l.getCount(); i++)
+				sign.push_back('+');
+		}
+		return;
 	}
-	int Calculate(int _x, int _y, int _z)
+	double Calculate(int _x, int _y, int _z)
 	{
-		int tmp = 0;
+		double tmp = 0;
 		tmp = tmp + getListCoeff(1)*pow(_x, getListExp(1) / 100)*pow(_y, getListExp(1) / 10 % 10)*pow(_z, getListExp(1) % 10 % 10);
 		for (int i = 2; i <= getListCount(); i++)
 		{

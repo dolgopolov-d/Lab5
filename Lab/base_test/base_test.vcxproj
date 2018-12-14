@@ -12,6 +12,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="test_list.cpp" />
+    <ClCompile Include="test_main.cpp" />
+    <ClCompile Include="test_polynom.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{F266A6B4-CBC2-41C0-9F55-056959ABA352}</ProjectGuid>
