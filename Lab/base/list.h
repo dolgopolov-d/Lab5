@@ -13,6 +13,15 @@ private:
 	int count;
 public:
 	TList() : pFirst(nullptr), count(0) {}
+	TList(const TList<T> &l):pFirst(nullptr), count(0)
+	{
+		Node *pTemp = l.pFirst;
+		while (pTemp != 0)
+		{
+			this->add(pTemp->c, pTemp->e);
+			pTemp = pTemp->pNext;
+		}
+	}
 	~TList()
 	{
 		Node *current = pFirst;
