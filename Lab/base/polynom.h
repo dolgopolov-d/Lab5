@@ -144,6 +144,32 @@ public:
 			for (int i = 1; i < l.getCount(); i++)
 				sign.push_back('+');
 		}
+		for (int i = 1; i < l.getCount(); i++)
+			for (int j = i + 1; j <= l.getCount(); j++)
+				if (l.getExp(i) == l.getExp(j))
+				{
+					if (sign[j - 2] == '-')
+						l.add(l.getCoeff(i) - l.getCoeff(j), l.getExp(i));
+					if (sign[j - 2] == '+')
+						l.add(l.getCoeff(i) + l.getCoeff(j), l.getExp(i));
+					l.del(j);
+					l.del(i);
+					flag = 1;
+				}
+				else
+					continue;
+		if (flag == 0)
+			return;
+		if (l.getCoeff(1) == 0)
+			l.del(1);
+		for (int i = 2; i < l.getCount(); i++)
+			if (l.getCoeff(i) == 0)
+			{
+				l.del(i);
+				sign.erase(i - 2);
+			}
+		if (l.getCoeff(1) == 0)
+			l.del(1);
 		return;
 	}
 	void doMinus(TPolynom &p1, TPolynom &p2)
@@ -196,6 +222,32 @@ public:
 			for (int i = 1; i < l.getCount(); i++)
 				sign.push_back('+');
 		}
+		for (int i = 1; i < l.getCount(); i++)
+			for (int j = i + 1; j <= l.getCount(); j++)
+				if (l.getExp(i) == l.getExp(j))
+				{
+					if (sign[j - 2] == '-')
+						l.add(l.getCoeff(i) - l.getCoeff(j), l.getExp(i));
+					if (sign[j - 2] == '+')
+						l.add(l.getCoeff(i) + l.getCoeff(j), l.getExp(i));
+					l.del(j);
+					l.del(i);
+					flag = 1;
+				}
+				else
+					continue;
+		if (flag == 0)
+			return;
+		if (l.getCoeff(1) == 0)
+			l.del(1);
+		for (int i = 2; i < l.getCount(); i++)
+			if (l.getCoeff(i) == 0)
+			{
+				l.del(i);
+				sign.erase(i - 2);
+			}
+		if (l.getCoeff(1) == 0)
+			l.del(1);
 		return;
 	}
 	double Calculate(int _x, int _y, int _z)
